@@ -1,17 +1,26 @@
-import Counter from "./components/Counter";
+import { useState } from 'react';
+import Cart from './components/Cart/Cart';
+import Home from './components/Home/Home';
+import Navbar from './components/Navbar';
+import './output.css'
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
 export default function App() {
-    return (
-        <div className="w-screen h-screen p-10 bg-gray-100 text-slate-700">
-            <h1 className="max-w-md mx-auto text-center text-2xl font-bold">
-                Simple Counter Application
-            </h1>
+    const [navigationToHome, setNavigationToHome] = useState(true)
 
-            <div className="max-w-md mx-auto mt-10 space-y-5">
-                <Counter />
-                <Counter />
-                <Counter />
+    const handelNavigation = (value) => {
+        setNavigationToHome(value);
+    }
+    return (
+        <Provider store={store}>
+            <div className="testBG">
+                {/* <!-- Navbar --> */}
+                <Navbar handelNavigation={handelNavigation} />
+                {/* <!-- Navbar ends --> */}
+                {navigationToHome ? <Home /> : <Cart />}
             </div>
-        </div>
+        </Provider>
+
     );
 }
